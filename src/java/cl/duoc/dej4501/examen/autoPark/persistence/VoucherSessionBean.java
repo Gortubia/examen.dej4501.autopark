@@ -32,6 +32,13 @@ public class VoucherSessionBean {
         return em.find(Voucher.class, id );
     }
       
+    
+    public List<Voucher> getAllVoucherByRut(int rutCliente){
+        return em.createNamedQuery("Voucher.findByRutCliente",Voucher.class)
+               .setParameter("rutCliente", rutCliente)
+               .getResultList();
+    }
+      
       
       
       public int findmaXiD (){

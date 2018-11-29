@@ -79,14 +79,13 @@
       <div class="container">
         <div class="row">
           <div class="col-xl-9 mx-auto">
-             
               <form class="needs-validation" name="frmaddticket" method="POST" action="./procesaTicketsServlet">
               <h1> Ingrese estacionamiento</h1>
               <hr class="mb-4">
             <div class="row">
                 
               <div class="col-md-6 mb-6">
-                 <label for="monto">Monto $</label>
+                 <label for="monto">Monto $ (minimo 500)</label>
                  <input type="number" min="500" class="form-control" id="txtMonto" name="txtMonto" placeholder="500" required="true">
               <div class="invalid-feedback">
                 Ingrese monto.
@@ -107,7 +106,7 @@
            <button class="btn btn-info btn-lg" type="submit">Agregar</button>
           </form>
         
-<hr class="mb-4">
+            <hr class="mb-4">
             <form class="needs-validation"  name="frmaddticket" method="POST" action="./procesaVoucherServlet">
             <div class="container">
              <div class="card mb-3"> 
@@ -149,7 +148,6 @@
                 Ingrese un email valido.
               </div>
             </div>
- 
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="pago">Pago</label>
@@ -160,7 +158,6 @@
                 </c:forEach>
                   <option></option>
                 </select>
-                 
               </div>
               <div class="col-md-6 mb-6">
                 <label for="eboleta">Envío boleta</label>
@@ -175,7 +172,6 @@
             </div>    
            </div>
                      <!-- DataTables Card-->
-                     
                      <div class="card-header">
                          <i class="fa fa-user"></i> Listado de tickets a pagar</div>
                      <div class="card-body">
@@ -203,16 +199,15 @@
                      <div class="card-footer small text-muted">Auto Park.</div>
                  </div>
              </div>
-
-         
+            <div class="container">
             <hr class="mb-4">
-            <h4 class="mb-3">Total $</h4>
-           
-            <input type="number" value="${sessionScope.voucherVD.totalVoucher}"  class="form-control" id="txttot" >
- 
-             
+            <h4 class="mb-3 ">Total $</h4>
+            <div class="col-md-6 mb-3">
+            <input type="text" value="${sessionScope.voucherVD.totalVoucher}"  class="form-control" disabled>
+            </div>
             <hr class="mb-4">
-            <button class="btn btn-primary btn-lg" type="submit">Pagar</button>
+            <button class="btn btn-info btn-lg" type="submit">Pagar</button>
+            </div>
           </form>
            </c:otherwise>
      </c:choose>
@@ -225,35 +220,17 @@
                  </div>
              </fieldset>
      </c:if>    
-                            
-                 
-                 
-              
-              
-              
           </div>
         </div>
       </div>
-    </section>
-    
-    
-     
-    
-    
-    
-
-     
-
+    </section>    
     <footer class="footer text-faded text-center py-5">
       <div class="container">
         <p class="m-0 small">Copyright &copy; Auto Park 2018</p>
       </div>
     </footer>
-
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
   </body>
-
 </html>

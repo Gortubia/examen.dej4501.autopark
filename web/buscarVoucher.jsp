@@ -4,7 +4,6 @@
     Author     : adolf
 --%>
 
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Index</title>
+    <title>voucher</title>
 
     <!-- Bootstrap core CSS -->
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -33,9 +32,7 @@
   </head>
 
   <body>
- <jsp:include page="/getAllEstacionamientoServlet" flush="true"></jsp:include> 
-<jsp:include page="/getOpcionEnvioBoleta" flush="true"></jsp:include> 
-<jsp:include page="/getMediosPago" flush="true"></jsp:include> 
+ 
 <jsp:useBean id="estacionamiento" class="cl.duoc.dej4501.examen.autoPark.entity.Estacionamiento" scope="page"></jsp:useBean>
 <jsp:useBean id="voucherVD" class="cl.duoc.dej4501.examen.autoPark.viewDomain.voucherViewDomain" scope="page"></jsp:useBean>
 <jsp:useBean id="ticketVD" class="cl.duoc.dej4501.examen.autoPark.viewDomain.TicketsViewDomain" scope="page"></jsp:useBean>
@@ -74,126 +71,76 @@
       </div>
     </nav>
     
-    
+
+
     <section class="page-section cta">
       <div class="container">
         <div class="row">
           <div class="col-xl-9 mx-auto">
-             
-              <form class="needs-validation" name="frmaddticket" method="POST" action="./procesaTicketsServlet">
-              <h1> Ingrese estacionamiento</h1>
+              
+               <c:if test="${sessionScope.msgError!=null}">
+         <fieldset>
+             <div class="alert alert-warning" role="alert">
+                 <legend>Mensajes</legend> 
+                 <c:out value="${sessionScope.msgError}"></c:out>
+                 <c:remove var="msgError"></c:remove>
+                 </div>
+             </fieldset>
+     </c:if>
+              
+              <form class="needs-validation" name="frmBuscaVoucher" method="POST" action="./getVoucherByRutServlet">
+              <h1> Ingrese Rut para buscar voucher</h1>
               <hr class="mb-4">
             <div class="row">
-                
               <div class="col-md-6 mb-6">
-                 <label for="monto">Monto $</label>
-                 <input type="number" min="500" class="form-control" id="txtMonto" name="txtMonto" placeholder="500" required="true">
-              <div class="invalid-feedback">
-                Ingrese monto.
-              </div>
-              </div>
-              <div class="col-md-6">
-                <label for="estacionamiento">Estacionamiento</label>
-                <select class="custom-select d-block w-200" id="ddlEstacionamiento" name="ddlEstacionamiento" required="true">
-                  <option value="">Seleccione...</option>
-                  <c:forEach items="${sessionScope.listaEstacionemientos}" var="estacionamiento">
-                      <option value="${estacionamiento.idEstacionamiento}"><c:out value="${estacionamiento.nombreEstacionamiento}"></c:out></option>
-                 </c:forEach>
-                </select>
-                 
+                 <label for="rut">Rut</label>
+                 <input type="number" class="form-control" id="txtRut" name="txtRut" placeholder="rut" required="true">
               </div>
             </div>
            <hr class="mb-4">
-           <button class="btn btn-info btn-lg" type="submit">Agregar</button>
+           <button class="btn btn-info btn-lg" type="submit">buscar voucher</button>
           </form>
-        
-<hr class="mb-4">
-            <form class="needs-validation"  name="frmaddticket" method="POST" action="./procesaVoucherServlet">
             <div class="container">
              <div class="card mb-3"> 
              <c:choose>
-                 <c:when test="${sessionScope.voucherVD==null}"> 
+                 <c:when test="${sessionScope.listadoVoucherVDRut==null}"> 
                      <div class="alert alert-warning" role="alert">
-                         No se encuentran tickets. Debe primero agregar ticket de pago..<a href="#"></a>
+                         Ingrese rut para buscar voucher<a href="#"></a>
                      </div> 
                  </c:when> 
                  <c:otherwise> 
-            <div class="container">
-             <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="rut">Rut</label>
-                <input type="number" class="form-control" id="txtRut" name="txtRut" placeholder="Rut" required="true">
-                <div class="invalid-feedback">
-                  Rut requerido.
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="txtNombre" name="txtNombre" placeholder="Nombre"  required="true">
-                <div class="invalid-feedback">
-                  Nombre requerido. 
-                </div>
-              </div>
-            </div> 
-            <div class="mb-3">
-              <label for="telefono">Teléfono</label>
-              <input type="tel" class="form-control" id="txtTelefono" name="txtTelefono" placeholder="56777666222" required="true">
-              <div class="invalid-feedback">
-                Ingrese teléfono.
-              </div>
-            </div> 
-            <div class="mb-3">
-              <label for="correo">Correo<span class="text-muted"></span></label>
-              <input type="email" class="form-control" id="txtEmail" name="txtEmail" required="true" placeholder="tu@ejemplo.com">
-              <div class="invalid-feedback">
-                Ingrese un email valido.
-              </div>
-            </div>
- 
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="pago">Pago</label>
-                <select class="custom-select d-block w-100" id="ddlMediosPago" name="ddlMediosPago" required="true">
-                    <option value="">Seleccione...</option>
-                  <c:forEach items="${sessionScope.listaMediosPago}" var="mediosPago">
-                      <option value="${mediosPago.idmediosPagos}"><c:out value="${mediosPago.nombremediosPagos}"></c:out></option>
-                </c:forEach>
-                  <option></option>
-                </select>
-                 
-              </div>
-              <div class="col-md-6 mb-6">
-                <label for="eboleta">Envío boleta</label>
-                <select class="custom-select d-block w-100" id="ddlOpEnvBoleta" name="ddlOpEnvBoleta" required="true">
-                  <option value="">Seleccione...</option>
-                  <c:forEach items="${sessionScope.listaOpcionEnvioBoleta}" var="envioBoleta">
-                      <option value="${envioBoleta.idopEnvioBoleta}"><c:out value="${envioBoleta.opcionEnvioBoleta}"></c:out></option>
-                </c:forEach>
-                </select>
-                 
-              </div>
-            </div>    
-           </div>
                      <!-- DataTables Card-->
-                     
                      <div class="card-header">
-                         <i class="fa fa-user"></i> Listado de tickets a pagar</div>
+                         <i class="fa fa-user"></i>voucher encontrados para el rut:</div>
                      <div class="card-body">
                          <div class="table-responsive">
                              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                  <thead>
                                      <tr> 
-                                         <th>Estacionamiento</th>
-                                         <th>Monto</th> 
-                                         <th>N° Ticket</th> 
+                                         <th>Id</th>
+                                         <th>Estacionamientos</th> 
+                                         <th>Opcion envio</th> 
+                                         <th>Total</th> 
                                      </tr>
                                  </thead>
                                  <tbody> 
-                                     <c:forEach  items="${sessionScope.voucherVD.listadoTickets}" var="ticketVD">
+                                     <c:forEach  items="${sessionScope.listadoVoucherVDRut}" var="voucherVD">
                                          <tr>
-                                             <td><c:out value="${ticketVD.nombreEstacionamiento}"></c:out> </td>
-                                             <td><c:out value="${ticketVD.monto}"></c:out> </td> 
-                                             <td><c:out value="${ticketVD.idTicket}"></c:out> </td> 
+                                             <td><c:out value="${voucherVD.idVoucher}"></c:out> </td>
+                                             <td><!-- Muestra cada nombre de estacionamiento dentro de los tickets-->
+                                             <c:forEach  items="${voucherVD.listadoTickets}" var="ticketVD">
+                                                 <c:out value="${ticketVD.nombreEstacionamiento}"></c:out> 
+                                             </c:forEach>
+                                             </td>
+                                             <td><c:out value="${voucherVD.opEnvio}"></c:out> </td> 
+                                             <td><c:out value="${voucherVD.totalVoucher}"></c:out> </td> 
+                                             <!-- Carga la pagina con los detalles del voucher llamando al servel verDetalleVoucherServlet-->
+                                             <c:url value="./verDetalleVoucherServlet" var="detalle">
+                                             <c:param name="codigo" value="${voucherVD.idVoucher}"></c:param>
+                                             </c:url>
+                                                <td><input type="button" class=" btn-warning btn-small" name="btnDetalle" value="+" onclick="window.location.href = '${detalle}'"> </td>
+                            
+                                             
                                          </tr>
                                      </c:forEach>
                                  </tbody>
@@ -203,47 +150,14 @@
                      <div class="card-footer small text-muted">Auto Park.</div>
                  </div>
              </div>
-
-         
-            <hr class="mb-4">
-            <h4 class="mb-3">Total $</h4>
-           
-            <input type="number" value="${sessionScope.voucherVD.totalBoucher}"  class="form-control" id="txttot" >
- 
-             
-            <hr class="mb-4">
-            <button class="btn btn-primary btn-lg" type="submit">Pagar</button>
-          </form>
            </c:otherwise>
      </c:choose>
-      <c:if test="${sessionScope.msgError!=null}">
-         <fieldset>
-             <div class="alert alert-warning" role="alert">
-                 <legend>Mensajes</legend> 
-                 <c:out value="${sessionScope.msgError}"></c:out>
-                 <c:remove var="msgError"></c:remove>
-                 </div>
-             </fieldset>
-     </c:if>    
-                            
-                 
-                 
-              
-              
-              
+         
           </div>
         </div>
       </div>
     </section>
-    
-    
      
-    
-    
-    
-
-     
-
     <footer class="footer text-faded text-center py-5">
       <div class="container">
         <p class="m-0 small">Copyright &copy; Auto Park 2018</p>
