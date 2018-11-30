@@ -6,7 +6,7 @@
 package cl.duoc.dej4501.examen.autoPark.presentacion;
 
 
-import cl.duoc.dej4501.examen.autoPark.viewDomain.TicketsViewDomain;
+
 import cl.duoc.dej4501.examen.autoPark.viewDomain.voucherViewDomain;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -40,6 +40,39 @@ public class VerDetalleVoucherServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        
+        boolean flag = false;  
+        HttpSession sesion = request.getSession();
+        //creamos un listado de voucher
+        List<voucherViewDomain> listVoucherVD = new LinkedList<>();
+        //dejamos el listado de vouchers de la session en la variable para trabajar
+        listVoucherVD = (List<voucherViewDomain>)request.getSession().getAttribute("listadoVoucherVDRut");
+        int idVoucher =Integer.parseInt(request.getParameter("codigo"));
+        //comparamos el codigo con cada voucher de la lista para obtenerlo
+        voucherViewDomain voucherVD = new voucherViewDomain();
+        for(voucherViewDomain voucherVDDetalle : listVoucherVD ){
+            //si encontramos el voucher lo enviamos a la pagina para mostrar el detalle
+            //jusnto con sus tickets
+            if(voucherVDDetalle.getIdVoucher()== idVoucher){
+                  voucherVD = voucherVDDetalle;
+                  flag = true;
+            } 
+                
+        }
+        if(flag){
+            //enviamos el voucher si el codigo corresponde
+                   sesion.setAttribute("voucherVD", voucherVD);                    
+                  response.sendRedirect("verVoucher.jsp");
+        }else{
+             //si no se encuentra enviamos un error y volvemos a la pagina
+                sesion.setAttribute("msgError", "No hay detalle");
+            response.sendRedirect("buscarVoucher.jsp");
+ 
+        }
+          
+                  
+       
          
     }
 
@@ -54,28 +87,7 @@ public class VerDetalleVoucherServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-              
-        HttpSession sesion = request.getSession();
-        //creamos un listado de voucher
-        List<voucherViewDomain> listVoucherVD = new LinkedList<>();
-        //dejamos el listado de vouchers de la session en la variable para trabajar
-        listVoucherVD = (List<voucherViewDomain>)request.getSession().getAttribute("listadoVoucherVDRut");
-        int idVoucher =Integer.parseInt(request.getParameter("codigo"));
-        //comparamos el codigo con cada voucher de la lista para obtenerlo
-        for(voucherViewDomain voucherVD : listVoucherVD ){
-            //si encontramos el voucher lo enviamos a la pagina para mostrar el detalle
-            //jusnto con sus tickets
-            if(voucherVD.getIdVoucher()== idVoucher){
-                //enviamos el voucher si el codigo corresponde
-                   sesion.setAttribute("voucherVD", voucherVD);                    
-                  response.sendRedirect("verVoucher.jsp");
-            }else{//si no se encuentra enviamos un error y volvemos a la pagina
-                sesion.setAttribute("msgError", "No hay detalle");
-            response.sendRedirect("buscarVoucher.jsp");
-            }
-                
-        }
- 
+       
     }
 
     /**

@@ -2,6 +2,10 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/adolf/OneDrive/Documentos/NetBeansProjects/cl.duoc.dej4501.examen.autoPark/web/buscarVoucher.jsp</file>
+            <file>file:/C:/Users/adolf/OneDrive/Documentos/NetBeansProjects/cl.duoc.dej4501.examen.autoPark/src/java/cl/duoc/dej4501/examen/autoPark/presentacion/GetVoucherByRutServlet.java</file>
+            <file>file:/C:/Users/adolf/OneDrive/Documentos/NetBeansProjects/cl.duoc.dej4501.examen.autoPark/src/java/cl/duoc/dej4501/examen/autoPark/presentacion/VerDetalleVoucherServlet.java</file>
+        </group>
     </open-files>
 </project-private>

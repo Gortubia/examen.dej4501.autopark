@@ -177,6 +177,7 @@ public class ProcesaTicketsServlet extends HttpServlet {
                      */
                     int montoNuevo = 0;
                     int montoOld =0;
+                    int lastIdTicket =0;
                     for (TicketsViewDomain ticket1 : requestVoucherVD.getListadoTickets()) {
                         if (ticket1.getIdEstacionamiento()== idEstacionamiento) {
                             montoNuevo = monto;
@@ -188,13 +189,14 @@ public class ProcesaTicketsServlet extends HttpServlet {
                             flag2 = false;
                             request.getSession().setAttribute("voucherVD", voucherVD);
                         }
+                        lastIdTicket = ticket1.getIdTicket();
                     }
                     //si no es repetido el estacionamiento se agrega a la lista de estacionamientos del voucher
                     if(flag2){
                       //hacemos un listado con los ticket de la session
                      List<TicketsViewDomain> requestTicketVD = requestVoucherVD.getListadoTickets();
                     //sumamos 1 al id ticket
-                    ticketVD.setIdTicket(ticketVD.getIdTicket() + 1 );
+                    ticketVD.setIdTicket(lastIdTicket + 1 );
                     //agregamos el nuevo estacionamiento
                     requestTicketVD.add(ticketVD);
                     //se lo agregamos al voucher

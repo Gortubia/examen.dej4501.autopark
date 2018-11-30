@@ -138,13 +138,13 @@ public class GetVoucherByRutServlet extends HttpServlet {
     private List<voucherViewDomain> getAllDetalleTicket(List<Voucher> listaVoucher) {
           //Creamos una lista con VoucherVD para enviar pro la session con parametros adecuados
           List<voucherViewDomain> listaVoucherVD = new LinkedList<>();
-          voucherVD = new voucherViewDomain();
+          
         try {
                //se procesa cada uno de los vouchers de la lista para crear una lista de vouchers
             for (Voucher voucher1 : listaVoucher) {
+                voucherVD = new voucherViewDomain();
                 //cargamos los datos del voucher en el voucherVD para poder agregarlos a la lista
-                int id = voucher1.getIdVoucher();
-                voucherVD.setIdVoucher(id);
+                voucherVD.setIdVoucher(voucher1.getIdVoucher());
                 //obtenemos la opcion envio segun el id 
                 //buscamos la opcion envio boleta completa por sessionBeans segun el id que esta en el voucher
                 OpcionEnvioBoleta objOpEnvioBoleta = opcionEnvBoletaSB.getOpENvioBoletaById(voucher1.getIdopEnvioBoleta().getIdopEnvioBoleta());
@@ -174,8 +174,9 @@ public class GetVoucherByRutServlet extends HttpServlet {
                 voucherVD.setListadoTickets(listaobjTicketVD);
                 //agregamos el voucher al listado de boucher para crear el listado por rut en la grilla
                 listaVoucherVD.add(voucherVD);
-                 
+                  
             }
+            
         
             
         } catch (Exception e) {
