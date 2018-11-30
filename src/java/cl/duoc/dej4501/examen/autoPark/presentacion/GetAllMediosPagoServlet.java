@@ -5,7 +5,6 @@
  */
 package cl.duoc.dej4501.examen.autoPark.presentacion;
 
-
 import cl.duoc.dej4501.examen.autoPark.entity.Mediospago;
 import cl.duoc.dej4501.examen.autoPark.persistence.MediosPagoSessionBean;
 import java.io.IOException;
@@ -22,12 +21,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author adolf
  */
-@WebServlet(name = "GetAllMediosPagoServlet", urlPatterns = {"/getAllMediosPagoServlet","/getMediosPago"})
+@WebServlet(name = "GetAllMediosPagoServlet", urlPatterns = {"/getAllMediosPagoServlet", "/getMediosPago"})
 public class GetAllMediosPagoServlet extends HttpServlet {
 
     @EJB
     private MediosPagoSessionBean mediosPagoSB;
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -41,12 +39,12 @@ public class GetAllMediosPagoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession sesion = request.getSession();
         List<Mediospago> listaMediosPago = this.mediosPagoSB.getAllOpcionesPago();
         sesion.setAttribute("listaMediosPago", listaMediosPago);
         response.sendRedirect("index.jsp");
-         
+
     }
 
     /**
@@ -60,7 +58,7 @@ public class GetAllMediosPagoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**

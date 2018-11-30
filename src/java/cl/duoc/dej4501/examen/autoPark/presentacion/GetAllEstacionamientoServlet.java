@@ -5,7 +5,6 @@
  */
 package cl.duoc.dej4501.examen.autoPark.presentacion;
 
-
 import cl.duoc.dej4501.examen.autoPark.entity.Estacionamiento;
 import cl.duoc.dej4501.examen.autoPark.persistence.EstacionamientoSessionBean;
 import java.io.IOException;
@@ -22,13 +21,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author adolf
  */
-@WebServlet(name = "GetAllEstacionamientoServlet", urlPatterns = {"/getAllEstacionamientoServlet","/listaEstacionamientos"})
+@WebServlet(name = "GetAllEstacionamientoServlet", urlPatterns = {"/getAllEstacionamientoServlet", "/listaEstacionamientos"})
 public class GetAllEstacionamientoServlet extends HttpServlet {
 
-    
     @EJB
     private EstacionamientoSessionBean estacionamientoSB;
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -42,12 +39,12 @@ public class GetAllEstacionamientoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-          HttpSession sesion = request.getSession();
+
+        HttpSession sesion = request.getSession();
         List<Estacionamiento> listaEstacionemientos = this.estacionamientoSB.getAllEstacionamientos();
         sesion.setAttribute("listaEstacionemientos", listaEstacionemientos);
         response.sendRedirect("index.jsp");
-         
+
     }
 
     /**
@@ -61,7 +58,7 @@ public class GetAllEstacionamientoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         
+
     }
 
     /**

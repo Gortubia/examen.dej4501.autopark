@@ -158,34 +158,31 @@ public class GetVoucherByRutServlet extends HttpServlet {
                 //analizamos la lista de tickets del voucher y los guardamos para
                 //pasarlos al ticketVD conparametros correctos para mostrar
                 
-                for(Ticket ticket1 : voucher1.getTicketList()){
-                     ticketVD = new TicketsViewDomain();
-                     ticketVD.setIdTicket(ticket1.getIdTicket());
-                     //pasa el monto de long a int y lo guardamos en el ticketVD
-                     ticketVD.setMonto(ticket1.getMonto().intValue());
-                     ticketVD.setIdEstacionamiento(ticket1.getIdEstacionamiento().getIdEstacionamiento());
-                     //obtenemos sel nobre del estacionamiento mediante 
-                     Estacionamiento estacionamiento = estacionamientoSB.getEstacionamientoById(ticket1.getIdEstacionamiento().getIdEstacionamiento());
-                     ticketVD.setNombreEstacionamiento(estacionamiento.getNombreEstacionamiento());
-                     listaobjTicketVD.add(ticketVD);
-                   }
+                for (Ticket ticket1 : voucher1.getTicketList()) {
+                    ticketVD = new TicketsViewDomain();
+                    ticketVD.setIdTicket(ticket1.getIdTicket());
+                    //pasa el monto de long a int y lo guardamos en el ticketVD
+                    ticketVD.setMonto(ticket1.getMonto().intValue());
+                    ticketVD.setIdEstacionamiento(ticket1.getIdEstacionamiento().getIdEstacionamiento());
+                    //obtenemos sel nobre del estacionamiento mediante 
+                    Estacionamiento estacionamiento = estacionamientoSB.getEstacionamientoById(ticket1.getIdEstacionamiento().getIdEstacionamiento());
+                    ticketVD.setNombreEstacionamiento(estacionamiento.getNombreEstacionamiento());
+                    listaobjTicketVD.add(ticketVD);
+                }
                 //terminada de crear la lista de View Domains de ticket los agregamos al VoucherVD que enviaremos en la session
                 //sumamos la lista de tickets al voucher.
                 voucherVD.setListadoTickets(listaobjTicketVD);
                 //agregamos el voucher al listado de boucher para crear el listado por rut en la grilla
                 listaVoucherVD.add(voucherVD);
-                  
+
             }
-            
-        
-            
+
         } catch (Exception e) {
-            
+
             System.out.println("\nError" + e);
         }
-             
-                
-            return listaVoucherVD;
-        }
+
+        return listaVoucherVD;
+    }
 
 }

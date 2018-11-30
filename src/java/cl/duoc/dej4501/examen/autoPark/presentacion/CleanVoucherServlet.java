@@ -6,7 +6,6 @@
 package cl.duoc.dej4501.examen.autoPark.presentacion;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +20,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "CleanVoucherServlet", urlPatterns = {"/cleanVoucherServlet"})
 public class CleanVoucherServlet extends HttpServlet {
 
-    
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -35,7 +32,7 @@ public class CleanVoucherServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+
     }
 
     /**
@@ -49,14 +46,11 @@ public class CleanVoucherServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession sesion=request.getSession(true);
-         sesion.invalidate(); 
-         response.sendRedirect("index.jsp");
-        
-      
-    }
 
-     
+        HttpSession sesion = request.getSession(true);
+        sesion.invalidate();
+        response.sendRedirect("index.jsp");
+
+    }
 
 }

@@ -5,8 +5,6 @@
  */
 package cl.duoc.dej4501.examen.autoPark.presentacion;
 
-
-
 import cl.duoc.dej4501.examen.autoPark.entity.OpcionEnvioBoleta;
 import cl.duoc.dej4501.examen.autoPark.persistence.OpcionEnvioBoletaSessionBean;
 import java.io.IOException;
@@ -23,11 +21,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author adolf
  */
-@WebServlet(name = "GetAllOpEnBoletaServlet", urlPatterns = {"/getAllOpEnBoletaServlet","/getOpcionEnvioBoleta"})
+@WebServlet(name = "GetAllOpEnBoletaServlet", urlPatterns = {"/getAllOpEnBoletaServlet", "/getOpcionEnvioBoleta"})
 public class GetAllOpEnBoletaServlet extends HttpServlet {
 
-     @EJB
-     private OpcionEnvioBoletaSessionBean opcionEBSB;
+    @EJB
+    private OpcionEnvioBoletaSessionBean opcionEBSB;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -41,8 +39,8 @@ public class GetAllOpEnBoletaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-         HttpSession sesion = request.getSession();
+
+        HttpSession sesion = request.getSession();
         List<OpcionEnvioBoleta> listaOpcionEnvioBoleta = this.opcionEBSB.getAllOpcionEnvioBoleta();
         sesion.setAttribute("listaOpcionEnvioBoleta", listaOpcionEnvioBoleta);
         response.sendRedirect("index.jsp");
@@ -59,7 +57,7 @@ public class GetAllOpEnBoletaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**

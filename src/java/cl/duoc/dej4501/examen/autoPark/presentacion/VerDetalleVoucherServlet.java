@@ -6,7 +6,6 @@
 package cl.duoc.dej4501.examen.autoPark.presentacion;
 
 
-
 import cl.duoc.dej4501.examen.autoPark.viewDomain.voucherViewDomain;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
  *
  * @author adolf
@@ -26,8 +24,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "VerDetalleVoucherServlet", urlPatterns = {"/verDetalleVoucherServlet"})
 public class VerDetalleVoucherServlet extends HttpServlet {
 
-  
-     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -40,40 +36,37 @@ public class VerDetalleVoucherServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        boolean flag = false;  
+        //procesa el voucher para mostrar el detalle
+
+        boolean flag = false;
         HttpSession sesion = request.getSession();
         //creamos un listado de voucher
         List<voucherViewDomain> listVoucherVD = new LinkedList<>();
         //dejamos el listado de vouchers de la session en la variable para trabajar
-        listVoucherVD = (List<voucherViewDomain>)request.getSession().getAttribute("listadoVoucherVDRut");
-        int idVoucher =Integer.parseInt(request.getParameter("codigo"));
+        listVoucherVD = (List<voucherViewDomain>) request.getSession().getAttribute("listadoVoucherVDRut");
+        int idVoucher = Integer.parseInt(request.getParameter("codigo"));
         //comparamos el codigo con cada voucher de la lista para obtenerlo
         voucherViewDomain voucherVD = new voucherViewDomain();
-        for(voucherViewDomain voucherVDDetalle : listVoucherVD ){
+        for (voucherViewDomain voucherVDDetalle : listVoucherVD) {
             //si encontramos el voucher lo enviamos a la pagina para mostrar el detalle
             //jusnto con sus tickets
-            if(voucherVDDetalle.getIdVoucher()== idVoucher){
-                  voucherVD = voucherVDDetalle;
-                  flag = true;
-            } 
-                
+            if (voucherVDDetalle.getIdVoucher() == idVoucher) {
+                voucherVD = voucherVDDetalle;
+                flag = true;
+            }
+
         }
-        if(flag){
+        if (flag) {
             //enviamos el voucher si el codigo corresponde
-                   sesion.setAttribute("voucherVD", voucherVD);                    
-                  response.sendRedirect("verVoucher.jsp");
-        }else{
-             //si no se encuentra enviamos un error y volvemos a la pagina
-                sesion.setAttribute("msgError", "No hay detalle");
+            sesion.setAttribute("voucherVD", voucherVD);
+            response.sendRedirect("verVoucher.jsp");
+        } else {
+            //si no se encuentra enviamos un error y volvemos a la pagina
+            sesion.setAttribute("msgError", "No hay detalle");
             response.sendRedirect("buscarVoucher.jsp");
- 
+
         }
-          
-                  
-       
-         
+
     }
 
     /**
@@ -87,7 +80,7 @@ public class VerDetalleVoucherServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+
     }
 
     /**
