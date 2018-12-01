@@ -35,6 +35,17 @@ public class TicketSessionBean {
         return em.find(Ticket.class, id );
     }
       
+      public int findAllByVoucherId (){
+        int maxId = 0; 
+        try {
+            
+            maxId = (int)  em.createQuery("SELECT MAX(t.idTicket) FROM Ticket t") 
+                    .getSingleResult();  
+        } catch (Exception e) {
+        }
+        return maxId;
+        
+    }
       
       
       public int findmaXiD (){

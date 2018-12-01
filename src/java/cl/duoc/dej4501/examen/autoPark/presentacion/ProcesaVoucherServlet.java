@@ -224,12 +224,12 @@ public class ProcesaVoucherServlet extends HttpServlet {
             Ticket objTicket = new Ticket();
             Estacionamiento objEstacionamiento = estacionamientoSB.getEstacionamientoById(ticket1.getIdEstacionamiento());
             int idTicket = (ticketSB.findmaXiD()) + 1;
-
+            //seteamos los parametros para el ticket a ingresar
             objTicket.setIdTicket(idTicket);
             objTicket.setIdVoucher(voucher);
             objTicket.setIdEstacionamiento(objEstacionamiento);
             objTicket.setMonto((long) ticket1.getMonto());
-
+            //Grabamos la BBDD 
             try {
                 this.ticketSB.guardarTicket(objTicket);
             } catch (Exception e) {

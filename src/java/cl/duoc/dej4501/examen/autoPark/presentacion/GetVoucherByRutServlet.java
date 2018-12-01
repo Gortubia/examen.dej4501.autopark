@@ -42,6 +42,7 @@ public class GetVoucherByRutServlet extends HttpServlet {
     private OpcionEnvioBoletaSessionBean opcionEnvBoletaSB;
     @EJB
     private EstacionamientoSessionBean estacionamientoSB;
+     
     //generamos los viewDomain para cargar los valores obtenidos de la consulta a la BBDD y pasar los parametros
     //para generar campos mas amables y no pasar los id directos de la BBDD
     private voucherViewDomain voucherVD;
@@ -78,6 +79,7 @@ public class GetVoucherByRutServlet extends HttpServlet {
         String msgError = "";
         //parametros de post
         int rut = 0; 
+        
 
         boolean flag = true;
         HttpSession sesion = request.getSession();
@@ -88,6 +90,9 @@ public class GetVoucherByRutServlet extends HttpServlet {
         } else {
             try {
                 rut = Integer.parseInt(request.getParameter("txtRut"));
+                //eliminamos lo que este en session
+              //   sesion = request.getSession(true);
+              // sesion.invalidate();
             } catch (Exception ex) {
                 msgError += "\nRut no corresponde" + ex;
                 flag = false;
@@ -97,11 +102,18 @@ public class GetVoucherByRutServlet extends HttpServlet {
             //todos los voucher de ese rut
             List<Voucher> listObjVoucher;         
             //verificamos si encuentra el rut en la BBDD y procesamos la insformación
-            if (flag) { 
-                
+            if (flag) {  
                 try {
+                     /*
+                    * voucherSB.update(); --> llama a un metodo en el sesionbean para refrescar los datos desde la base de datos
+                    *para poder listar la informacion
+                    */
+                  //  actualizamos los  datos de la entidad desde la base de datos para poder mostrar
+                    voucherSB.update();
+                    
+                    //una vez actualizada podemos seguir trabajando los datos 
                     //buscamos los datos del voucher por RUT en la BBDD y  los pasamos al objVoucher
-                     listObjVoucher = this.voucherSB.getAllVoucherByRut(rut);
+                    listObjVoucher = this.voucherSB.getAllVoucherByRut(rut); 
                      //si no encuentra informacion con el rut retorna a la pagina
                      if (listObjVoucher.isEmpty()){
                          request.getSession().setAttribute("msgError", "No se encuentra el rut");                    
@@ -109,36 +121,32 @@ public class GetVoucherByRutServlet extends HttpServlet {
                          //si encuentra vouchers coon el rut procesa los tickets de cada voucher
                      }else{
                          //si se encuentra el rut en la BBDD vamos a buscar los ticket que corresponden
-                         // a cada uno de los vouchers
-                         
+                         // a cada uno de los vouchers 
                          //llamamos al metodo para crear la lista de vourcherVD
                          List<voucherViewDomain> listadoVoucherVDRut = getAllDetalleTicket(listObjVoucher);
                             //enviamos el listado de los vouchers mas ticket recuperados por rut
-                            sesion.setAttribute("listadoVoucherVDRut", listadoVoucherVDRut);                    
+                            request.getSession().setAttribute("listadoVoucherVDRut", listadoVoucherVDRut);
+                           // sesion.setAttribute("listadoVoucherVDRut", listadoVoucherVDRut);                    
                             response.sendRedirect("buscarVoucher.jsp");
-                     }
-                    
+                     } 
                 } catch (Exception e) {
                     request.getSession().setAttribute("msgError", "No se encuentra rut");
                     response.sendRedirect("buscarVoucher.jsp");
                 }
             }
             response.sendRedirect("bucarVoucher.jsp");
-        }
-        
+        } 
     }
 /*
     *metodo para la validacion de parametro RUT enviado desde el buscarVoucher.jsp
     */
     private boolean validacion(HttpServletRequest request) {
-        return request.getParameter("txtRut").isEmpty();
-
+        return request.getParameter("txtRut").isEmpty(); 
     } 
    
     private List<voucherViewDomain> getAllDetalleTicket(List<Voucher> listaVoucher) {
           //Creamos una lista con VoucherVD para enviar pro la session con parametros adecuados
-          List<voucherViewDomain> listaVoucherVD = new LinkedList<>();
-          
+          List<voucherViewDomain> listaVoucherVD = new LinkedList<>(); 
         try {
                //se procesa cada uno de los vouchers de la lista para crear una lista de vouchers
             for (Voucher voucher1 : listaVoucher) {

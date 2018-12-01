@@ -41,7 +41,7 @@ public class OpcionEnvioBoleta implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_opEnvioBoleta")
     private Integer idopEnvioBoleta;
-    @Size(max = 15)
+    @Size(max = 100)
     private String opcionEnvioBoleta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idopEnvioBoleta")
     private List<Voucher> voucherList;

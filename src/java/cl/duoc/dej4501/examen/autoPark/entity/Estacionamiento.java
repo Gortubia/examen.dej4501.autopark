@@ -41,10 +41,10 @@ public class Estacionamiento implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_estacionamiento")
     private Integer idEstacionamiento;
-    @Size(max = 15)
+    @Size(max = 100)
     @Column(name = "nombre_estacionamiento")
     private String nombreEstacionamiento;
-    @Size(max = 100)
+    @Size(max = 300)
     private String direccion;
     @OneToMany(mappedBy = "idEstacionamiento")
     private List<Ticket> ticketList;
